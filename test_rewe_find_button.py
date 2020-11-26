@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 
 import config         # DRIVER_PATH
 import helpers        # find_element_by_tag_and_class_name
+import product_parser # parse_product
 
 import time
 
@@ -123,6 +124,7 @@ print( "INFO: found {} elements".format( len( elements ) ) )
 
 for e in elements:
     print( e.text )
+    product_parser.parse_product( e )
         #match = pattern.match(element.text)
         #if match:
             #print(element.text)
