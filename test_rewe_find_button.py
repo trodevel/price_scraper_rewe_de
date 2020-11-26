@@ -9,6 +9,21 @@ import config         # DRIVER_PATH
 
 import time
 
+def find_element_by_tag_and_class_name( driver, tag, class_name ):
+
+    all_elems = driver.find_elements_by_tag_name( tag )
+
+    print( "DEBUG: all ", tag, " ", len( all_elems ), ":" )
+
+    for i in all_elems:
+        i_class = i.get_attribute( 'class' )
+        print ( "DEBUG: ", i.text, " class '", i_class, "'" )
+        if i_class == class_name:
+            print( "DEBUG: FOUND !!!!" )
+            return i
+
+    return None;
+
 options = webdriver.ChromeOptions() 
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
 options.add_argument("--disable-blink-features=AutomationControlled")
@@ -32,16 +47,13 @@ print( "clicking" )
 terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
 terms_button.click()
 
-all_buttons = driver.find_elements_by_tag_name('button')
+i = find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
 
-print( "Buttons ", len( all_buttons ), ":" )
-for i in all_buttons:
-    i_class = i.get_attribute('class')
-    print ( i.text, 'class ', i_class )
-    if i_class == 'gbmc-trigger gbmc-qa-trigger':
-        print( "FOUND !!!!" )
-        i.click()
-        break
+if i == None:
+    print( "FATAL: cannot find button to enter postcode (PLZ)" )
+    exit()
+
+i.click()
 
 try:
     link_select_loc = driver.find_element_by_id("gbmc-trigger gbmc-qa-trigger")
