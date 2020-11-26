@@ -13,11 +13,11 @@ def find_element_by_tag_and_class_name( driver, tag, class_name ):
 
     all_elems = driver.find_elements_by_tag_name( tag )
 
-    print( "DEBUG: all ", tag, " ", len( all_elems ), ":" )
+    print( "DEBUG: all '{}' {}:".format( tag, len( all_elems ) ) )
 
     for i in all_elems:
         i_class = i.get_attribute( 'class' )
-        print ( "DEBUG: ", i.text, " class '", i_class, "'" )
+        print ( "DEBUG: {} class '{}'".format( i.text, i_class ) )
         if i_class == class_name:
             print( "DEBUG: FOUND !!!!" )
             return i
