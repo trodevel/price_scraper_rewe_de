@@ -1,5 +1,14 @@
 #!/usr/bin/python3
 
+def does_class_exist( parent, class_name ):
+
+    elems = parent.find_elements_by_class_name( class_name )
+
+    if len( elems ) > 0 :
+        return True
+
+    return False
+
 def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_name, attribute_val, is_whole_name = True ):
 
     print( "INFO: looking for '{}' '{}' = '{}':".format( tag_name, attribute_name, attribute_val ) )
