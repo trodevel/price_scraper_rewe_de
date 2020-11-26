@@ -24,22 +24,22 @@ element = WebDriverWait(driver, 15).until(
         EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
     )
 
-print "found banner, sleeping"
+print( "found banner, sleeping" )
 
 time.sleep(10)
 
-print "clicking"
+print( "clicking" )
 terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
 terms_button.click()
 
 all_buttons = driver.find_elements_by_tag_name('button')
 
-print "Buttons ", len( all_buttons ), ":"
+print( "Buttons ", len( all_buttons ), ":" )
 for i in all_buttons:
     i_class = i.get_attribute('class')
     print ( i.text, 'class ', i_class )
     if i_class == 'gbmc-trigger gbmc-qa-trigger':
-        print "FOUND !!!!"
+        print( "FOUND !!!!" )
         i.click()
         break
 
