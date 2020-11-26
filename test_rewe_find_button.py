@@ -9,28 +9,6 @@ import config         # DRIVER_PATH
 
 import time
 
-def find_element_by_tag_and_class_name( driver, tag, class_name, is_whole_name = True ):
-
-    print( "INFO: looking for '{}' '{}':".format( tag, class_name ) )
-
-    all_elems = driver.find_elements_by_tag_name( tag )
-
-    print( "DEBUG: all '{}' {}:".format( tag, len( all_elems ) ) )
-
-    for i in all_elems:
-        i_class = i.get_attribute( 'class' )
-        print ( "DEBUG: {} class '{}'".format( i.text, i_class ) )
-        if is_whole_name:
-            if i_class == class_name:
-                print( "DEBUG: FOUND - {}".format( i_class ) )
-                return i
-        else:
-            if i_class.startswith( class_name ):
-                print( "DEBUG: FOUND - {} ".format( i_class ) )
-                return i
-
-    return None;
-
 def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_name, attribute_val, is_whole_name = True ):
 
     print( "INFO: looking for '{}' '{}' = '{}':".format( tag_name, attribute_name, attribute_val ) )
@@ -52,6 +30,10 @@ def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_nam
                 return i
 
     return None;
+
+def find_element_by_tag_and_class_name( driver, tag_name, class_name, is_whole_name = True ):
+
+    return find_element_by_tag_name_and_attribute_name( driver, tag_name, "class", class_name, is_whole_name )
 
 options = webdriver.ChromeOptions() 
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
