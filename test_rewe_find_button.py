@@ -124,7 +124,8 @@ print( "INFO: found {} elements".format( len( elements ) ) )
 
 for e in elements:
     print( e.text )
-    product_parser.parse_product( e )
+    p = product_parser.parse_product( e )
+    print( p )
         #match = pattern.match(element.text)
         #if match:
             #print(element.text)
