@@ -133,6 +133,15 @@ if i == None:
 
 i.click()
 
+print( "sleeping" )
+time.sleep(5)
+
+content = driver.find_element_by_id( 'search-service-content' )
+
+if content == None:
+    print( "FATAL: cannot find content" )
+    exit()
+
 exit()
 
 print( "found", len( elements ), " elements" )
