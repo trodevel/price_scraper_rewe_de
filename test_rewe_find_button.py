@@ -137,7 +137,19 @@ i.click()
 print( "sleeping" )
 time.sleep(3)
 
-i = find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
+article = find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
+
+if article == None:
+    print( "FATAL: cannot find input desired shop" )
+    exit()
+
+i = find_element_by_tag_name_and_attribute_name( article, "button", "data-testid", "gbmc-market-picker" )
+
+if i == None:
+    print( "FATAL: cannot click on desired shop" )
+    exit()
+
+i.click()
 
 exit()
 
