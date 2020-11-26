@@ -142,18 +142,13 @@ if content == None:
     print( "FATAL: cannot find content" )
     exit()
 
-exit()
+elements = content.find_elements_by_class_name( 'search-service-productDetailsWrapper' )
 
-print( "found", len( elements ), " elements" )
+print( "INFO: found {} elements".format( len( elements ) ) )
 
-if elements is not None:
-    for element in elements:
-        print(element.text)
+for e in elements:
+    print( e.text )
         #match = pattern.match(element.text)
         #if match:
             #print(element.text)
-
-#terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
-
-#if terms_button is not None:
-#    terms_button.click()
+exit()
