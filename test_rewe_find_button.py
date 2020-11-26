@@ -9,7 +9,9 @@ import config         # DRIVER_PATH
 
 import time
 
-def find_element_by_tag_and_class_name( driver, tag, class_name ):
+def find_element_by_tag_and_class_name( driver, tag, class_name, is_whole_name = True ):
+
+    print( "INFO: looking for '{}' '{}':".format( tag, class_name ) )
 
     all_elems = driver.find_elements_by_tag_name( tag )
 
@@ -18,9 +20,36 @@ def find_element_by_tag_and_class_name( driver, tag, class_name ):
     for i in all_elems:
         i_class = i.get_attribute( 'class' )
         print ( "DEBUG: {} class '{}'".format( i.text, i_class ) )
-        if i_class == class_name:
-            print( "DEBUG: FOUND !!!!" )
-            return i
+        if is_whole_name:
+            if i_class == class_name:
+                print( "DEBUG: FOUND - {}".format( i_class ) )
+                return i
+        else:
+            if i_class.startswith( class_name ):
+                print( "DEBUG: FOUND - {} ".format( i_class ) )
+                return i
+
+    return None;
+
+def find_element_by_name_and_class_name( driver, name, class_name, is_whole_name = True ):
+
+    print( "INFO: looking for '{}' '{}':".format( name, class_name ) )
+
+    all_elems = driver.find_elements_by_name( name )
+
+    print( "DEBUG: all '{}' {}:".format( name, len( all_elems ) ) )
+
+    for i in all_elems:
+        i_class = i.get_attribute( 'class' )
+        print ( "DEBUG: {} class '{}'".format( i.text, i_class ) )
+        if is_whole_name:
+            if i_class == class_name:
+                print( "DEBUG: FOUND - {}".format( i_class ) )
+                return i
+        else:
+            if i_class.startswith( class_name ):
+                print( "DEBUG: FOUND - {} ".format( i_class ) )
+                return i
 
     return None;
 
@@ -47,6 +76,7 @@ print( "clicking" )
 terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
 terms_button.click()
 
+
 i = find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
 
 if i == None:
@@ -55,10 +85,56 @@ if i == None:
 
 i.click()
 
-try:
-    link_select_loc = driver.find_element_by_id("gbmc-trigger gbmc-qa-trigger")
+print( "sleeping" )
+time.sleep(5)
 
-    print( "found 'select loc' link" )
+#<input data-testid="zip-code-input" class="gbmc-zipcode-input gbmc-undecided svelte-1wkkum2" type="text" inputmode="numeric" placeholder="51063">
+
+#i = find_element_by_tag_and_class_name( driver, 'input', 'gbmc-zipcode-input gbmc-undecided ' )
+
+#if i == None:
+#    print( "FATAL: cannot find input field to enter postcode (PLZ)" )
+#    exit()
+
+#print( "sending postcode {}".format( config.PLZ ) )
+
+#i.send_keys( config.PLZ )
+
+
+market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
+
+print( "found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
+
+#all_elems = market_chooser_div.find_elements_by_xpath(".//*")
+#all_elems = market_chooser_div.find_elements_by_tag_name( "div" )
+all_elems_d = market_chooser_div.find_elements_by_tag_name( "div" )
+all_elems_s = market_chooser_div.find_elements_by_tag_name( "section" )
+
+print( "DEBUG: size {}, {}:".format( len( all_elems_d ), len( all_elems_s ) ) )
+
+all_elems = all_elems_d
+
+#document.querySelector("body > div.gbmc-market-chooser-container > section > div > div > label > input")
+#/html/body/div[49]/section/div/div/label/input
+#all_elems = driver.find_elements_by_xpath("/html/body/div")
+print( "DEBUG: all '{}' {}:".format( 'div', len( all_elems ) ) )
+
+for i in all_elems:
+    i_class = i.get_attribute( 'class' )
+    print ( "DEBUG: class '{}'".format( i_class ) )
+
+#find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
+find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-", False )
+
+exit()
+
+try:
+    i = driver.find_element_by_xpath("/html/body/div[52]/section/div/div/label/input")
+
+    print( "found 'input field' link" )
+    #print( "sending postcode {}".format( config.PLZ ) )
+
+    i.send_keys( config.PLZ )
 except:
     print( "ERROR: found 'select loc' link" )
     #print("Unexpected error:", sys.exc_info()[0])
