@@ -31,24 +31,24 @@ def find_element_by_tag_and_class_name( driver, tag, class_name, is_whole_name =
 
     return None;
 
-def find_element_by_name_and_class_name( driver, name, class_name, is_whole_name = True ):
+def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_name, attribute_val, is_whole_name = True ):
 
-    print( "INFO: looking for '{}' '{}':".format( name, class_name ) )
+    print( "INFO: looking for '{}' '{}' = '{}':".format( tag_name, attribute_name, attribute_val ) )
 
-    all_elems = driver.find_elements_by_name( name )
+    all_elems = driver.find_elements_by_tag_name( tag_name )
 
-    print( "DEBUG: all '{}' {}:".format( name, len( all_elems ) ) )
+    print( "DEBUG: all '{}' {}:".format( tag_name, len( all_elems ) ) )
 
     for i in all_elems:
-        i_class = i.get_attribute( 'class' )
-        print ( "DEBUG: {} class '{}'".format( i.text, i_class ) )
+        i_val = i.get_attribute( attribute_name )
+        print ( "DEBUG: {} '{}' '{}'".format( i.text, attribute_name, i_val ) )
         if is_whole_name:
-            if i_class == class_name:
-                print( "DEBUG: FOUND - {}".format( i_class ) )
+            if i_val == attribute_val:
+                print( "DEBUG: FOUND - {}".format( i_val ) )
                 return i
         else:
-            if i_class.startswith( class_name ):
-                print( "DEBUG: FOUND - {} ".format( i_class ) )
+            if i_val.startswith( attribute_val ):
+                print( "DEBUG: FOUND - {} ".format( i_val ) )
                 return i
 
     return None;
@@ -121,23 +121,25 @@ if i == None:
 print( "sending postcode {}".format( config.PLZ ) )
 
 i.send_keys( config.PLZ )
-exit()
 
-try:
-    i = driver.find_element_by_xpath("/html/body/div[52]/section/div/div/label/input")
+print( "sleeping" )
+time.sleep(3)
 
-    print( "found 'input field' link" )
-    #print( "sending postcode {}".format( config.PLZ ) )
+#find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
+i = find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
 
-    i.send_keys( config.PLZ )
-except:
-    print( "ERROR: found 'select loc' link" )
-    #print("Unexpected error:", sys.exc_info()[0])
+if i == None:
+    print( "FATAL: cannot find input field to enter postcode (PLZ)" )
     exit()
 
-link_select_loc.click()
+i.click()
 
-elements = driver.find_elements_by_class_name("gbmc-market-chooser-container")
+print( "sleeping" )
+time.sleep(3)
+
+i = find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
+
+exit()
 
 print( "found", len( elements ), " elements" )
 
