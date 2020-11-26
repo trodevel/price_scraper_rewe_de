@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import helpers
+
 def parse_product_pic( product ):
     div = product.find_element_by_class_name( 'search-service-pictureWrapper' )
     img = div.find_element_by_tag_name( 'img' )
@@ -14,8 +16,11 @@ def parse_product_grammage( product_details ):
     return div.text
 
 def parse_product_price( product_details ):
-    div = product_details.find_element_by_class_name( 'search-service-productPrice' )
-    return div.text
+    name = 'search-service-productPrice'
+    if helpers.does_class_exist( product_details, name ):
+        div = product_details.find_element_by_class_name( name )
+        return div.text
+    return "-1"
 
 def parse_product_details( product ):
     div = product.find_element_by_class_name( 'search-service-productDetails' )
