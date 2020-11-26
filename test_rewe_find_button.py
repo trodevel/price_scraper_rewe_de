@@ -6,34 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 import config         # DRIVER_PATH
+import helpers        # find_element_by_tag_and_class_name
 
 import time
-
-def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_name, attribute_val, is_whole_name = True ):
-
-    print( "INFO: looking for '{}' '{}' = '{}':".format( tag_name, attribute_name, attribute_val ) )
-
-    all_elems = driver.find_elements_by_tag_name( tag_name )
-
-    print( "DEBUG: all '{}' {}:".format( tag_name, len( all_elems ) ) )
-
-    for i in all_elems:
-        i_val = i.get_attribute( attribute_name )
-        print ( "DEBUG: {} '{}' '{}'".format( i.text, attribute_name, i_val ) )
-        if is_whole_name:
-            if i_val == attribute_val:
-                print( "DEBUG: FOUND - {}".format( i_val ) )
-                return i
-        else:
-            if i_val.startswith( attribute_val ):
-                print( "DEBUG: FOUND - {} ".format( i_val ) )
-                return i
-
-    return None;
-
-def find_element_by_tag_and_class_name( driver, tag_name, class_name, is_whole_name = True ):
-
-    return find_element_by_tag_name_and_attribute_name( driver, tag_name, "class", class_name, is_whole_name )
 
 options = webdriver.ChromeOptions() 
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
@@ -59,7 +34,7 @@ terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
 terms_button.click()
 
 
-i = find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
+i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
 
 if i == None:
     print( "FATAL: cannot find button to enter postcode (PLZ)" )
@@ -94,7 +69,7 @@ for i in all_elems:
     print ( "DEBUG: class '{}'".format( i_class ) )
 
 #find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
-i = find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
+i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
 
 if i == None:
     print( "FATAL: cannot find input field to enter postcode (PLZ)" )
@@ -108,7 +83,7 @@ print( "sleeping" )
 time.sleep(3)
 
 #find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
-i = find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
+i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
 
 if i == None:
     print( "FATAL: cannot find input field to enter postcode (PLZ)" )
@@ -119,13 +94,13 @@ i.click()
 print( "sleeping" )
 time.sleep(3)
 
-article = find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
+article = helpers.find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
 
 if article == None:
     print( "FATAL: cannot find input desired shop" )
     exit()
 
-i = find_element_by_tag_name_and_attribute_name( article, "button", "data-testid", "gbmc-market-picker" )
+i = helpers.find_element_by_tag_name_and_attribute_name( article, "button", "data-testid", "gbmc-market-picker" )
 
 if i == None:
     print( "FATAL: cannot click on desired shop" )
