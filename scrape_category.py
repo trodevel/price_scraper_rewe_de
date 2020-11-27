@@ -37,6 +37,61 @@ def accept_banner( driver ):
     terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
     terms_button.click()
 
+def select_shop_by_post_code( driver ):
+    i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
+
+    if i == None:
+        print( "FATAL: cannot find button to enter postcode (PLZ)" )
+        exit()
+
+    i.click()
+
+    print( "sleeping" )
+    time.sleep(5)
+
+    market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
+
+    print( "found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
+
+    i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
+
+    if i == None:
+        print( "FATAL: cannot find input field to enter postcode (PLZ)" )
+        exit()
+
+    print( "sending postcode {}".format( config.PLZ ) )
+
+    i.send_keys( config.PLZ )
+
+    print( "sleeping" )
+    time.sleep(3)
+
+    #find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
+    i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
+
+    if i == None:
+        print( "FATAL: cannot find input field to enter postcode (PLZ)" )
+        exit()
+
+    i.click()
+
+    print( "sleeping" )
+    time.sleep(3)
+
+    article = helpers.find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
+
+    if article == None:
+        print( "FATAL: cannot find input desired shop" )
+        exit()
+
+    i = helpers.find_element_by_tag_name_and_attribute_name( article, "button", "data-testid", "gbmc-market-picker" )
+
+    if i == None:
+        print( "FATAL: cannot click on desired shop" )
+        exit()
+
+    i.click()
+
 ##########################################################
 
 driver = init_driver()
@@ -45,59 +100,7 @@ driver.get('https://shop.rewe.de/c/obst-gemuese/?page=2')
 
 accept_banner( driver )
 
-i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
-
-if i == None:
-    print( "FATAL: cannot find button to enter postcode (PLZ)" )
-    exit()
-
-i.click()
-
-print( "sleeping" )
-time.sleep(5)
-
-market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
-
-print( "found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
-
-i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
-
-if i == None:
-    print( "FATAL: cannot find input field to enter postcode (PLZ)" )
-    exit()
-
-print( "sending postcode {}".format( config.PLZ ) )
-
-i.send_keys( config.PLZ )
-
-print( "sleeping" )
-time.sleep(3)
-
-#find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
-i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
-
-if i == None:
-    print( "FATAL: cannot find input field to enter postcode (PLZ)" )
-    exit()
-
-i.click()
-
-print( "sleeping" )
-time.sleep(3)
-
-article = helpers.find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
-
-if article == None:
-    print( "FATAL: cannot find input desired shop" )
-    exit()
-
-i = helpers.find_element_by_tag_name_and_attribute_name( article, "button", "data-testid", "gbmc-market-picker" )
-
-if i == None:
-    print( "FATAL: cannot click on desired shop" )
-    exit()
-
-i.click()
+select_shop_by_post_code( driver )
 
 print( "sleeping" )
 time.sleep(5)
