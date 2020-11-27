@@ -123,10 +123,7 @@ elements = content.find_elements_by_class_name( 'search-service-productDetailsWr
 print( "INFO: found {} elements".format( len( elements ) ) )
 
 for e in elements:
-    print( e.text )
     p = product_parser.parse_product( e )
     print( p )
-        #match = pattern.match(element.text)
-        #if match:
-            #print(element.text)
+
 exit()
