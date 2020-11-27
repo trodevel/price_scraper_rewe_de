@@ -42,3 +42,12 @@ def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_nam
 def find_element_by_tag_and_class_name( driver, tag_name, class_name, is_whole_name = True ):
 
     return find_element_by_tag_name_and_attribute_name( driver, tag_name, "class", class_name, is_whole_name )
+
+def dump_elements_by_tag_name( driver, tag_name ):
+
+    all_elems = driver.find_elements_by_tag_name( tag_name )
+
+    print( "dump_elements_by_tag_name: tag '{}', found {} element(s):".format( tag_name, len( all_elems ) ) )
+
+    for i in all_elems:
+        print( "class '{}', id '{}'".format( i.get_attribute( 'class' ), i.get_attribute( 'id' ) ) )
