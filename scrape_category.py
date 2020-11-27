@@ -11,6 +11,8 @@ import product_parser # parse_product
 
 import time
 
+##########################################################
+
 def init_driver():
     options = webdriver.ChromeOptions() 
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
@@ -24,6 +26,8 @@ def init_driver():
 
     return driver
 
+##########################################################
+
 def accept_banner( driver ):
     element = WebDriverWait(driver, 15).until(
         EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
@@ -36,6 +40,8 @@ def accept_banner( driver ):
 
     terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
     terms_button.click()
+
+##########################################################
 
 def select_shop_by_post_code( driver ):
     i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
