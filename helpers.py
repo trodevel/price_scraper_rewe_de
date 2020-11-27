@@ -9,6 +9,14 @@ def does_class_exist( parent, class_name ):
 
     return False
 
+def get_optional_element_text_by_class_name( parent, class_name, default_value ):
+
+    if does_class_exist( parent, class_name ):
+        div = parent.find_element_by_class_name( class_name )
+        return div.text
+
+    return default_value
+
 def find_element_by_tag_name_and_attribute_name( driver, tag_name, attribute_name, attribute_val, is_whole_name = True ):
 
     print( "INFO: looking for '{}' '{}' = '{}':".format( tag_name, attribute_name, attribute_val ) )
