@@ -46,30 +46,10 @@ i.click()
 print( "sleeping" )
 time.sleep(5)
 
-
 market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
 
 print( "found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
 
-#all_elems = market_chooser_div.find_elements_by_xpath(".//*")
-#all_elems = market_chooser_div.find_elements_by_tag_name( "div" )
-all_elems_d = market_chooser_div.find_elements_by_tag_name( "div" )
-all_elems_s = market_chooser_div.find_elements_by_tag_name( "section" )
-
-print( "DEBUG: size {}, {}:".format( len( all_elems_d ), len( all_elems_s ) ) )
-
-all_elems = all_elems_d
-
-#document.querySelector("body > div.gbmc-market-chooser-container > section > div > div > label > input")
-#/html/body/div[49]/section/div/div/label/input
-#all_elems = driver.find_elements_by_xpath("/html/body/div")
-print( "DEBUG: all '{}' {}:".format( 'div', len( all_elems ) ) )
-
-for i in all_elems:
-    i_class = i.get_attribute( 'class' )
-    print ( "DEBUG: class '{}'".format( i_class ) )
-
-#find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
 i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
 
 if i == None:
