@@ -11,29 +11,39 @@ import product_parser # parse_product
 
 import time
 
-options = webdriver.ChromeOptions() 
-options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
-options.add_argument("--disable-blink-features=AutomationControlled")
+def init_driver():
+    options = webdriver.ChromeOptions() 
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
+    options.add_argument("--disable-blink-features=AutomationControlled")
 
-options.add_experimental_option("excludeSwitches", ["enable-automation"])
-options.add_experimental_option('useAutomationExtension', False)
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
 
-DRIVER_PATH = config.DRIVER_PATH
-driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+    DRIVER_PATH = config.DRIVER_PATH
+    driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+
+    return driver
+
+def accept_banner( driver ):
+    element = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
+        )
+    print( "found banner, sleeping" )
+
+    time.sleep(10)
+
+    print( "clicking" )
+
+    terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
+    terms_button.click()
+
+##########################################################
+
+driver = init_driver()
+
 driver.get('https://shop.rewe.de/c/obst-gemuese/?page=2')
 
-element = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
-    )
-
-print( "found banner, sleeping" )
-
-time.sleep(10)
-
-print( "clicking" )
-terms_button = driver.find_element_by_id( 'uc-btn-accept-banner' )
-terms_button.click()
-
+accept_banner( driver )
 
 i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
 
