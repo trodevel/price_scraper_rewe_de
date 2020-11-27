@@ -104,20 +104,33 @@ def determine_number_of_pages( driver ):
 
     i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
 
-    div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+    #helpers.dump_elements_by_tag_name( i, 'div' )
+
+    # somehow the following doesn't work, so use the helper
+    #div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+
+    div = helpers.find_element_by_tag_and_class_name( i, 'div', 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+
+    if div == None:
+        print( "FATAL: cannot find pagination container" )
+        exit()
+
+    #helpers.dump_elements_by_tag_name( div, 'form' )
 
     elems = div.find_elements_by_tag_name( 'form' )
 
     if len( elems ) == 0:
         print( "FATAL: cannot find pages" )
         exit();
-
     last = elems[-1]
 
-    button = last.find_elements_by_tag_name( 'button' )
+    #print( last )
+
+    #helpers.dump_elements_by_tag_name( last, 'button' )
+
+    button = last.find_element_by_tag_name( 'button' )
 
     return button.text
-
 
 ##########################################################
 
@@ -132,9 +145,9 @@ select_shop_by_post_code( driver )
 print( "sleeping" )
 time.sleep(5)
 
-determine_number_of_pages( driver )
+num_pages = determine_number_of_pages( driver )
 
-exit()
+print( "INFO: number of pages {}".format( num_pages ) )
 
 content = driver.find_element_by_id( 'search-service-content' )
 
