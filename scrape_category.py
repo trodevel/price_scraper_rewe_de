@@ -100,6 +100,27 @@ def select_shop_by_post_code( driver ):
 
 ##########################################################
 
+def determine_number_of_pages( driver ):
+
+    i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
+
+    div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+
+    elems = div.find_elements_by_tag_name( 'form' )
+
+    if len( elems ) == 0:
+        print( "FATAL: cannot find pages" )
+        exit();
+
+    last = elems[-1]
+
+    button = last.find_elements_by_tag_name( 'button' )
+
+    return button.text
+
+
+##########################################################
+
 driver = init_driver()
 
 driver.get('https://shop.rewe.de/c/obst-gemuese/?page=2')
@@ -110,6 +131,10 @@ select_shop_by_post_code( driver )
 
 print( "sleeping" )
 time.sleep(5)
+
+determine_number_of_pages( driver )
+
+exit()
 
 content = driver.find_element_by_id( 'search-service-content' )
 
