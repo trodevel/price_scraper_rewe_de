@@ -134,6 +134,24 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
+def parse_page( driver ):
+
+    content = driver.find_element_by_id( 'search-service-content' )
+
+    if content == None:
+        print( "FATAL: cannot find content" )
+        exit()
+
+    elements = content.find_elements_by_class_name( 'search-service-productDetailsWrapper' )
+
+    print( "INFO: found {} elements".format( len( elements ) ) )
+
+    for e in elements:
+        p = product_parser.parse_product( e )
+        print( p )
+
+##########################################################
+
 driver = init_driver()
 
 driver.get('https://shop.rewe.de/c/obst-gemuese/?page=2')
@@ -149,18 +167,6 @@ num_pages = determine_number_of_pages( driver )
 
 print( "INFO: number of pages {}".format( num_pages ) )
 
-content = driver.find_element_by_id( 'search-service-content' )
-
-if content == None:
-    print( "FATAL: cannot find content" )
-    exit()
-
-elements = content.find_elements_by_class_name( 'search-service-productDetailsWrapper' )
-
-print( "INFO: found {} elements".format( len( elements ) ) )
-
-for e in elements:
-    p = product_parser.parse_product( e )
-    print( p )
+parse_page( driver )
 
 exit()
