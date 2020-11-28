@@ -212,8 +212,6 @@ def parse_category( driver, f, category_link ):
 
     wait_till_product_page_loaded( driver )
 
-    #helpers.sleep( 5 )
-
     num_pages = determine_number_of_pages( driver )
 
     print( "INFO: number of pages {} on {}".format( num_pages, category_link ) )
@@ -228,7 +226,7 @@ def parse_category( driver, f, category_link ):
 
         driver.get( category_link + '?page=' + str( page ) )
 
-        helpers.sleep( 5 )
+        wait_till_product_page_loaded( driver )
 
         parse_page( driver, f, category_link )
 
