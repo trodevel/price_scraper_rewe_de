@@ -150,7 +150,9 @@ def parse_page( driver, f ):
     for e in elements:
         p = product_parser.parse_product( e )
         f.write( p + "\n" )
-        print( '.', end='' )
+        print( '.', end='', flush=True )
+
+    print()
 
 ##########################################################
 
