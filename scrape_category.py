@@ -173,12 +173,15 @@ parse_page( driver )
 
 page += 1
 
-while page < num_pages:
+while page <= num_pages:
+
     driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
 
     print( "sleeping" )
     time.sleep(5)
 
     parse_page( driver )
+
+    page += 1
 
 exit()
