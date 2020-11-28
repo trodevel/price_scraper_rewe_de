@@ -192,7 +192,7 @@ def wait_for_page_load( driver, timeout=20 ):
 ##########################################################
 
 def extract_name_from_url( url ):
-    p = re.compile( "/([a-z_\-])/$" )
+    p = re.compile( "/([a-z_\-]*)/$" )
     result = p.search( url )
     res = result.group( 1 )
     return res
