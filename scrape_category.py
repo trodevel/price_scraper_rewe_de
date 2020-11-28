@@ -170,6 +170,16 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
+def wait_till_product_page_loaded( driver ):
+
+    element = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.ID, "search-service-content"))
+        )
+
+    print( "DEBUG: page loaded" )
+
+##########################################################
+
 def parse_page( driver, f, category_link ):
 
     content = driver.find_element_by_id( 'search-service-content' )
@@ -196,7 +206,9 @@ def parse_category( driver, f, category_link ):
 
     driver.get( category_link )
 
-    helpers.sleep( 5 )
+    wait_till_product_page_loaded( driver )
+
+    #helpers.sleep( 5 )
 
     num_pages = determine_number_of_pages( driver )
 
