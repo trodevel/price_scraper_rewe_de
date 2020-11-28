@@ -259,12 +259,16 @@ helpers.sleep(5)
 
 category_links = determine_categories( driver )
 
+num_categ = len( category_links )
+
 f = open( generate_filename(), "w" )
+
+i = 0
 
 for c in category_links:
 
+    i += 1
+
+    print( "parsing category {} / {}".format( i, num_categ ) )
+
     parse_category( driver, f, c )
-
-    print( '*', end='', flush=True )
-
-print()
