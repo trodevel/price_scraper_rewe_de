@@ -154,7 +154,9 @@ def parse_page( driver ):
 
 driver = init_driver()
 
-driver.get('https://shop.rewe.de/c/obst-gemuese/?page=2')
+page = 1
+
+driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
 
 accept_banner( driver )
 
