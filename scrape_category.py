@@ -204,7 +204,7 @@ def parse_category( driver, f, category_link ):
 
     page = 1
 
-    parse_page( driver, f )
+    parse_page( driver, f, category_link )
 
     page += 1
 
