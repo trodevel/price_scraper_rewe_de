@@ -182,12 +182,18 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
-def wait_for_page_load( driver, timeout=20 ):
+def wait_for_page_load_v3( driver, timeout=20 ):
 
     print( "DEBUG: waiting for page to load at {}.".format( driver.driver.current_url ) )
     old_page = driver.find_element_by_tag_name('html')
     yield
     WebDriverWait(driver, timeout).until(staleness_of(old_page))
+
+##########################################################
+
+def wait_for_page_load( driver, timeout=20 ):
+
+    wait_for_page_load_v3( driver, timeout )
 
 ##########################################################
 
