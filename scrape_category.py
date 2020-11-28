@@ -130,7 +130,7 @@ def determine_number_of_pages( driver ):
 
     button = last.find_element_by_tag_name( 'button' )
 
-    return button.text
+    return int( button.text )
 
 ##########################################################
 
