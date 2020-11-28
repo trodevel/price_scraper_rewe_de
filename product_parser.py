@@ -65,4 +65,6 @@ def parse_product( product ):
     pic = parse_product_pic( product )
     details = parse_product_details( product )
 
-    return details + ";" + pic
+    res = details + ";" + pic
+
+    return res.replace( "\n", "<br>" )
