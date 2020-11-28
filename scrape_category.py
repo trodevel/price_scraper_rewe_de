@@ -9,6 +9,7 @@ from selenium.webdriver.support.expected_conditions import staleness_of
 import config         # DRIVER_PATH
 import helpers        # find_element_by_tag_and_class_name
 import product_parser # parse_product
+import re
 
 from datetime import datetime
 
@@ -190,6 +191,14 @@ def wait_for_page_load( driver, timeout=20 ):
 
 ##########################################################
 
+def extract_name_from_url( url ):
+    p = re.compile( "/([a-z_\-])/$" )
+    result = p.search( url )
+    res = result.group( 1 )
+    return res
+
+##########################################################
+
 #def wait_till_product_page_loaded( driver ):
 #
 #    element = WebDriverWait(driver, 15).until(
@@ -224,6 +233,8 @@ def parse_page( driver, f, category_link ):
 
 def parse_category( driver, f, category_link ):
 
+    category_name = extract_name_from_url( category_link )
+
     driver.get( category_link )
 
     #wait_till_product_page_loaded( driver )
@@ -237,7 +248,7 @@ def parse_category( driver, f, category_link ):
 
     print( "INFO: parsing page {} / {}".format( page, num_pages ) )
 
-    parse_page( driver, f, category_link )
+    parse_page( driver, f, category_name )
 
     page += 1
 
@@ -249,7 +260,7 @@ def parse_category( driver, f, category_link ):
         #wait_till_product_page_loaded( driver )
         wait_for_page_load( driver )
 
-        parse_page( driver, f, category_link )
+        parse_page( driver, f, category_name )
 
         page += 1
 
