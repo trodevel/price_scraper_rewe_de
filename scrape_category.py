@@ -117,9 +117,14 @@ def determine_categories( driver ):
 
     print( "INFO: found {} categories".format( len( elements ) ) )
 
+    links = []
+
     for s in elements:
         link = s.get_attribute( 'href' )
-        print( link )
+        print( "DEBUG: determine_categories: {}".format( link ) )
+        links.append( link )
+
+    return links
 
 ##########################################################
 
