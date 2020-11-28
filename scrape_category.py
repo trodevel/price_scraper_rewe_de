@@ -173,10 +173,14 @@ def determine_number_of_pages( driver ):
 def wait_till_product_page_loaded( driver ):
 
     element = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.ID, "search-service-content"))
+        EC.visibility_of_element_located((By.ID, "search-service-content"))
         )
 
     print( "DEBUG: page loaded" )
+
+    element = WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "search-service-paginationContainer"))
+        )
 
 ##########################################################
 
