@@ -138,35 +138,45 @@ def determine_categories( driver ):
 
 def determine_number_of_pages( driver ):
 
-    i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
+    try:
 
-    #helpers.dump_elements_by_tag_name( i, 'div' )
+        element = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "search-service-paginationContainer"))
+            )
 
-    # somehow the following doesn't work, so use the helper
-    #div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+        i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
 
-    div = helpers.find_element_by_tag_and_class_name( i, 'div', 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+        #helpers.dump_elements_by_tag_name( i, 'div' )
 
-    if div == None:
-        print( "FATAL: cannot find pagination container" )
-        exit()
+        # somehow the following doesn't work, so use the helper
+        #div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
 
-    #helpers.dump_elements_by_tag_name( div, 'form' )
+        div = helpers.find_element_by_tag_and_class_name( i, 'div', 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
 
-    elems = div.find_elements_by_tag_name( 'form' )
+        if div == None:
+            print( "FATAL: cannot find pagination container" )
+            exit()
 
-    if len( elems ) == 0:
-        print( "FATAL: cannot find pages" )
-        exit();
-    last = elems[-1]
+        #helpers.dump_elements_by_tag_name( div, 'form' )
 
-    #print( last )
+        elems = div.find_elements_by_tag_name( 'form' )
 
-    #helpers.dump_elements_by_tag_name( last, 'button' )
+        if len( elems ) == 0:
+            print( "FATAL: cannot find pages" )
+            exit();
+        last = elems[-1]
 
-    button = last.find_element_by_tag_name( 'button' )
+        #print( last )
 
-    return int( button.text )
+        #helpers.dump_elements_by_tag_name( last, 'button' )
+
+        button = last.find_element_by_tag_name( 'button' )
+
+        return int( button.text )
+
+    except:
+
+        return 1
 
 ##########################################################
 
@@ -177,10 +187,6 @@ def wait_till_product_page_loaded( driver ):
         )
 
     print( "DEBUG: page loaded" )
-
-    element = WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "search-service-paginationContainer"))
-        )
 
 ##########################################################
 
