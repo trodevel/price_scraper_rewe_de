@@ -134,7 +134,7 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
-def parse_page( driver ):
+def parse_page( driver, f ):
 
     content = driver.find_element_by_id( 'search-service-content' )
 
@@ -148,7 +148,7 @@ def parse_page( driver ):
 
     for e in elements:
         p = product_parser.parse_product( e )
-        print( p )
+        f.write( p + "\n" )
 
 ##########################################################
 
@@ -169,7 +169,9 @@ num_pages = determine_number_of_pages( driver )
 
 print( "INFO: number of pages {}".format( num_pages ) )
 
-parse_page( driver )
+f = open( "products.csv", "w" )
+
+parse_page( driver, f )
 
 page += 1
 
@@ -180,7 +182,7 @@ while page <= num_pages:
     print( "sleeping" )
     time.sleep(5)
 
-    parse_page( driver )
+    parse_page( driver, f )
 
     page += 1
 
