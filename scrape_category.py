@@ -101,6 +101,28 @@ def select_shop_by_post_code( driver ):
 
 ##########################################################
 
+def determine_categories( driver ):
+
+    # somehow the following doesn't work, so use the helper
+    #div = driver.find_element_by_class_name( 'home-page-categories home-page-categories-collapsed' )
+    div = helpers.find_element_by_tag_and_class_name( driver, 'div', 'home-page-categories home-page-categories-collapsed' )
+
+    if div == None:
+        print( "FATAL: cannot find categories" )
+        exit()
+
+    i2 = div.find_element_by_class_name( 'home-page-category-tiles' )
+
+    elements = i2.find_elements_by_class_name( 'home-page-category-tile' )
+
+    print( "INFO: found {} categories".format( len( elements ) ) )
+
+    for s in elements:
+        link = s.get_attribute( 'href' )
+        print( link )
+
+##########################################################
+
 def determine_number_of_pages( driver ):
 
     i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
@@ -167,7 +189,9 @@ driver = init_driver()
 
 page = 1
 
-driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
+
+#driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
+driver.get( 'https://shop.rewe.de' )
 
 accept_banner( driver )
 
@@ -175,6 +199,10 @@ select_shop_by_post_code( driver )
 
 print( "sleeping" )
 time.sleep(5)
+
+determine_categories( driver )
+
+exit()
 
 num_pages = determine_number_of_pages( driver )
 
