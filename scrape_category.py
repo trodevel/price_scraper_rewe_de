@@ -224,11 +224,15 @@ def parse_category( driver, f, category_link ):
 
     page = 1
 
+    print( "INFO: parsing page {} / {}".format( page, num_pages ) )
+
     parse_page( driver, f, category_link )
 
     page += 1
 
     while page <= num_pages:
+
+        print( "INFO: parsing page {} / {}".format( page, num_pages ) )
 
         driver.get( category_link + '?page=' + str( page ) )
 
@@ -269,6 +273,6 @@ for c in category_links:
 
     i += 1
 
-    print( "parsing category {} / {}".format( i, num_categ ) )
+    print( "INFO: parsing category {} / {}".format( i, num_categ ) )
 
     parse_category( driver, f, c )
