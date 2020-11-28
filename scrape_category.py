@@ -10,6 +10,7 @@ import helpers        # find_element_by_tag_and_class_name
 import product_parser # parse_product
 
 import time
+from datetime import datetime
 
 ##########################################################
 
@@ -152,6 +153,13 @@ def parse_page( driver, f ):
 
 ##########################################################
 
+def generate_filename():
+    now = datetime.now()
+    d1 = now.strftime( "%Y%m%d_%H%M" )
+    res = "products_" + d1 + ".csv"
+    return res
+
+##########################################################
 driver = init_driver()
 
 page = 1
@@ -169,7 +177,7 @@ num_pages = determine_number_of_pages( driver )
 
 print( "INFO: number of pages {}".format( num_pages ) )
 
-f = open( "products.csv", "w" )
+f = open( generate_filename(), "w" )
 
 parse_page( driver, f )
 
