@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.expected_conditions import staleness_of
 
 import config         # DRIVER_PATH
 import helpers        # find_element_by_tag_and_class_name
@@ -180,13 +181,22 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
-def wait_till_product_page_loaded( driver ):
+def wait_for_page_load( driver, timeout=20 ):
 
-    element = WebDriverWait(driver, 15).until(
-        EC.visibility_of_element_located((By.ID, "search-service-content"))
-        )
+    print( "DEBUG: waiting for page to load at {}.".format( driver.driver.current_url ) )
+    old_page = driver.find_element_by_tag_name('html')
+    yield
+    WebDriverWait(driver, timeout).until(staleness_of(old_page))
 
-    print( "DEBUG: page loaded" )
+##########################################################
+
+#def wait_till_product_page_loaded( driver ):
+#
+#    element = WebDriverWait(driver, 15).until(
+#        EC.visibility_of_element_located((By.ID, "search-service-content"))
+#        )
+#
+#    print( "DEBUG: page loaded" )
 
 ##########################################################
 
@@ -216,7 +226,8 @@ def parse_category( driver, f, category_link ):
 
     driver.get( category_link )
 
-    wait_till_product_page_loaded( driver )
+    #wait_till_product_page_loaded( driver )
+    wait_for_page_load( driver )
 
     num_pages = determine_number_of_pages( driver )
 
@@ -231,12 +242,12 @@ def parse_category( driver, f, category_link ):
     page += 1
 
     while page <= num_pages:
-
         print( "INFO: parsing page {} / {}".format( page, num_pages ) )
 
         driver.get( category_link + '?page=' + str( page ) )
 
-        wait_till_product_page_loaded( driver )
+        #wait_till_product_page_loaded( driver )
+        wait_for_page_load( driver )
 
         parse_page( driver, f, category_link )
 
