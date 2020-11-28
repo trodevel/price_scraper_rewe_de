@@ -171,4 +171,14 @@ print( "INFO: number of pages {}".format( num_pages ) )
 
 parse_page( driver )
 
+page += 1
+
+while page < num_pages:
+    driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
+
+    print( "sleeping" )
+    time.sleep(5)
+
+    parse_page( driver )
+
 exit()
