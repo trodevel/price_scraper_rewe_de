@@ -158,7 +158,7 @@ def determine_number_of_pages( driver ):
 
 ##########################################################
 
-def parse_page( driver, f ):
+def parse_page( driver, f, category_link ):
 
     content = driver.find_element_by_id( 'search-service-content' )
 
@@ -172,10 +172,39 @@ def parse_page( driver, f ):
 
     for e in elements:
         p = product_parser.parse_product( e )
-        f.write( p + "\n" )
+        line = category_link + ";" + p + "\n"
+        f.write( line )
         print( '.', end='', flush=True )
 
     print()
+
+##########################################################
+
+def parse_category( driver, f, category_link ):
+
+    driver.get( category_link )
+
+    helpers.sleep( 5 )
+
+    num_pages = determine_number_of_pages( driver )
+
+    print( "INFO: number of pages {} on {}".format( num_pages, category_link ) )
+
+    page = 1
+
+    parse_page( driver, f )
+
+    page += 1
+
+    while page <= num_pages:
+
+        driver.get( category_link + '/?page=' + str( page ) )
+
+        helpers.sleep( 5 )
+
+        parse_page( driver, f, category_link )
+
+        page += 1
 
 ##########################################################
 
@@ -188,10 +217,6 @@ def generate_filename():
 ##########################################################
 driver = init_driver()
 
-page = 1
-
-
-#driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
 driver.get( 'https://shop.rewe.de' )
 
 accept_banner( driver )
@@ -200,28 +225,14 @@ select_shop_by_post_code( driver )
 
 helpers.sleep(5)
 
-determine_categories( driver )
-
-exit()
-
-num_pages = determine_number_of_pages( driver )
-
-print( "INFO: number of pages {}".format( num_pages ) )
+category_links = determine_categories( driver )
 
 f = open( generate_filename(), "w" )
 
-parse_page( driver, f )
+for c in category_links:
 
-page += 1
+    parse_category( driver, f, c )
 
-while page <= num_pages:
+    print( '*', end='', flush=True )
 
-    driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
-
-    helpers.sleep(5)
-
-    parse_page( driver, f )
-
-    page += 1
-
-exit()
+print()
