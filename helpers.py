@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import time
+
 def does_class_exist( parent, class_name ):
 
     elems = parent.find_elements_by_class_name( class_name )
@@ -51,3 +53,7 @@ def dump_elements_by_tag_name( driver, tag_name ):
 
     for i in all_elems:
         print( "class '{}', id '{}'".format( i.get_attribute( 'class' ), i.get_attribute( 'id' ) ) )
+
+def sleep( sec ):
+    print( "sleeping {} sec".format( sec ) )
+    time.sleep( sec )

@@ -9,7 +9,6 @@ import config         # DRIVER_PATH
 import helpers        # find_element_by_tag_and_class_name
 import product_parser # parse_product
 
-import time
 from datetime import datetime
 
 ##########################################################
@@ -33,9 +32,9 @@ def accept_banner( driver ):
     element = WebDriverWait(driver, 40).until(
         EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
         )
-    print( "found banner, sleeping" )
+    print( "DEBUG: found banner" )
 
-    time.sleep( 5 )
+    helpers.sleep( 5 )
 
     print( "clicking" )
 
@@ -53,8 +52,7 @@ def select_shop_by_post_code( driver ):
 
     i.click()
 
-    print( "sleeping" )
-    time.sleep(5)
+    helpers.sleep(5)
 
     market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
 
@@ -70,8 +68,7 @@ def select_shop_by_post_code( driver ):
 
     i.send_keys( config.PLZ )
 
-    print( "sleeping" )
-    time.sleep(3)
+    helpers.sleep(3)
 
     #find_element_by_tag_and_class_name( market_chooser_div, "section", "gbmc-content", False )
     i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "button", "gbmc-qa-pickup-trigger", False )
@@ -82,8 +79,7 @@ def select_shop_by_post_code( driver ):
 
     i.click()
 
-    print( "sleeping" )
-    time.sleep(3)
+    helpers.sleep(3)
 
     article = helpers.find_element_by_tag_name_and_attribute_name( market_chooser_div, "article", "data-testid", "gbmc-pickup-market-1763192" )
 
@@ -202,8 +198,7 @@ accept_banner( driver )
 
 select_shop_by_post_code( driver )
 
-print( "sleeping" )
-time.sleep(5)
+helpers.sleep(5)
 
 determine_categories( driver )
 
@@ -223,8 +218,7 @@ while page <= num_pages:
 
     driver.get( 'https://shop.rewe.de/c/obst-gemuese/?page=' + str( page ) )
 
-    print( "sleeping" )
-    time.sleep(5)
+    helpers.sleep(5)
 
     parse_page( driver, f )
 
