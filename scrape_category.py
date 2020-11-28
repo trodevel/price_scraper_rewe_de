@@ -29,7 +29,7 @@ def init_driver():
 ##########################################################
 
 def accept_banner( driver ):
-    element = WebDriverWait(driver, 30).until(
+    element = WebDriverWait(driver, 40).until(
         EC.presence_of_element_located((By.ID, "uc-btn-accept-banner"))
         )
     print( "found banner, sleeping" )
