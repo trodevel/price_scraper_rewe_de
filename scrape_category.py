@@ -97,6 +97,15 @@ def select_shop_by_post_code( driver ):
 
 ##########################################################
 
+def harmonize_link( link ):
+
+    if link.endswith('/'):
+        return link
+
+    return link + '/'
+
+##########################################################
+
 def determine_categories( driver ):
 
     # somehow the following doesn't work, so use the helper
@@ -117,6 +126,9 @@ def determine_categories( driver ):
 
     for s in elements:
         link = s.get_attribute( 'href' )
+
+        link = harmonize_link( link )
+
         print( "DEBUG: determine_categories: {}".format( link ) )
         links.append( link )
 
@@ -198,7 +210,7 @@ def parse_category( driver, f, category_link ):
 
     while page <= num_pages:
 
-        driver.get( category_link + '/?page=' + str( page ) )
+        driver.get( category_link + '?page=' + str( page ) )
 
         helpers.sleep( 5 )
 
