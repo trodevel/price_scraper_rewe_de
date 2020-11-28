@@ -58,7 +58,7 @@ def select_shop_by_post_code( driver ):
 
     market_chooser_div = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
 
-    print( "found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
+    print( "DEBUG: select_shop_by_post_code: found {}".format( market_chooser_div.get_attribute( 'class' ) ) )
 
     i = helpers.find_element_by_tag_and_class_name( market_chooser_div, "input", "gbmc-zipcode-input gbmc-undecided", False )
 
@@ -66,7 +66,7 @@ def select_shop_by_post_code( driver ):
         print( "FATAL: cannot find input field to enter postcode (PLZ)" )
         exit()
 
-    print( "sending postcode {}".format( config.PLZ ) )
+    print( "INFO: sending postcode {}".format( config.PLZ ) )
 
     i.send_keys( config.PLZ )
 
