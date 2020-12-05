@@ -124,7 +124,7 @@ def determine_categories( driver ):
 
     print( "INFO: found {} categories".format( len( elements ) ) )
 
-    links = []
+    links = dict()
 
     for s in elements:
         link = s.get_attribute( 'href' )
@@ -133,7 +133,7 @@ def determine_categories( driver ):
         link = harmonize_link( link )
 
         print( "DEBUG: determine_categories: {} - {}".format( link, name ) )
-        links.append( link )
+        links[ link ] = name
 
     return links
 
@@ -239,7 +239,7 @@ def extract_name_from_url( url ):
 
 ##########################################################
 
-def parse_page( driver, f, category_link ):
+def parse_page( driver, f, category_handle, category_name ):
 
     content = driver.find_element_by_id( 'search-service-content' )
 
@@ -253,7 +253,7 @@ def parse_page( driver, f, category_link ):
 
     for e in elements:
         p = product_parser.parse_product( e )
-        line = category_link + ";" + p + "\n"
+        line = category_handle + ';"' + category_name + '";' + p + "\n"
         f.write( line )
         print( '.', end='', flush=True )
 
@@ -261,9 +261,9 @@ def parse_page( driver, f, category_link ):
 
 ##########################################################
 
-def parse_category( driver, f, category_link ):
+def parse_category( driver, f, category_link, category_name ):
 
-    category_name = extract_name_from_url( category_link )
+    category_handle = extract_name_from_url( category_link )
 
     driver.get( category_link )
 
@@ -278,7 +278,7 @@ def parse_category( driver, f, category_link ):
 
     print( "INFO: parsing page {} / {}".format( page, num_pages ) )
 
-    parse_page( driver, f, category_name )
+    parse_page( driver, f, category_handle, category_name )
 
     page += 1
 
@@ -290,7 +290,7 @@ def parse_category( driver, f, category_link ):
         #wait_till_product_page_loaded( driver )
         wait_for_page_load( driver )
 
-        parse_page( driver, f, category_name )
+        parse_page( driver, f, category_handle, category_name )
 
         page += 1
 
@@ -315,18 +315,16 @@ helpers.sleep(5)
 
 category_links = determine_categories( driver )
 
-exit()
-
 num_categ = len( category_links )
 
 f = open( generate_filename(), "w" )
 
 i = 0
 
-for c in category_links:
+for c, category_name in category_links.items():
 
     i += 1
 
-    print( "INFO: parsing category {} / {}".format( i, num_categ ) )
+    print( "INFO: parsing category {} / {} - {}".format( i, num_categ, category_name ) )
 
-    parse_category( driver, f, c )
+    parse_category( driver, f, c, category_name )
