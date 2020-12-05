@@ -128,10 +128,11 @@ def determine_categories( driver ):
 
     for s in elements:
         link = s.get_attribute( 'href' )
+        name = s.text
 
         link = harmonize_link( link )
 
-        print( "DEBUG: determine_categories: {}".format( link ) )
+        print( "DEBUG: determine_categories: {} - {}".format( link, name ) )
         links.append( link )
 
     return links
@@ -313,6 +314,8 @@ select_shop_by_post_code( driver )
 helpers.sleep(5)
 
 category_links = determine_categories( driver )
+
+exit()
 
 num_categ = len( category_links )
 
