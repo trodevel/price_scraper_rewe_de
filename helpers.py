@@ -57,3 +57,7 @@ def dump_elements_by_tag_name( driver, tag_name ):
 def sleep( sec ):
     print( "sleeping {} sec".format( sec ) )
     time.sleep( sec )
+
+def quote_quotes( s )
+    res = s.replace( '"', '""' )
+    return res
