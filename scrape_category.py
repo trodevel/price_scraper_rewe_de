@@ -249,7 +249,7 @@ def wait_for_page_load( driver, timeout=20 ):
 
 ##########################################################
 
-def extract_name_from_url( url ):
+def extract_handle_from_url( url ):
     p = re.compile( "/([a-z_\-]*)/$" )
     result = p.search( url )
     res = result.group( 1 )
@@ -291,7 +291,7 @@ def parse_page( driver, f, category_handle, category_name, subcategory_handle, s
 
 def parse_subcategory( driver, f, category_handle, category_name, subcategory_link, subcategory_name ):
 
-    subcategory_handle = extract_name_from_url( subcategory_link )
+    subcategory_handle = extract_handle_from_url( subcategory_link )
 
     driver.get( subcategory_link )
 
@@ -326,7 +326,7 @@ def parse_subcategory( driver, f, category_handle, category_name, subcategory_li
 
 def parse_category( driver, f, category_link, category_name ):
 
-    category_handle = extract_name_from_url( category_link )
+    category_handle = extract_handle_from_url( category_link )
 
     driver.get( category_link )
 
