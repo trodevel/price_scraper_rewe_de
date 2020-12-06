@@ -20,6 +20,12 @@ def init_driver( driver_path ):
 
 ##########################################################
 
+def sleep( sec ):
+    print( "sleeping {} sec".format( sec ) )
+    time.sleep( sec )
+
+##########################################################
+
 def has_page_loaded( driver ):
     #self.log.info("Checking if {} page is loaded.".format(self.driver.current_url))
     page_state = driver.execute_script('return document.readyState;')
@@ -36,7 +42,7 @@ def wait_for_page_load_v1( driver, timeout=20 ):
             print( "DEBUG: loaded page in {} sec".format( i ) )
             return
         i += 1
-        helpers.sleep( 1 )
+        sleep( 1 )
 
     print( "FATAL: cannot load page in {} sec".format( timeout ) )
     exit()
@@ -109,10 +115,6 @@ def dump_elements_by_tag_name( driver, tag_name ):
 
     for i in all_elems:
         print( "class '{}', id '{}'".format( i.get_attribute( 'class' ), i.get_attribute( 'id' ) ) )
-
-def sleep( sec ):
-    print( "sleeping {} sec".format( sec ) )
-    time.sleep( sec )
 
 def quote_quotes( s ):
     res = s.replace( '"', '""' )
