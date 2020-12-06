@@ -131,9 +131,7 @@ def determine_subcategories( driver ):
 
     d3 = d2.find_element_by_class_name( 'search-service-rsFacetGroupListContainer' )
 
-    # somehow the following doesn't work, so use the helper
     d4 = d3.find_element_by_class_name( 'search-service-navFacetGroupContainerFacetOptionList' )
-    #d4 = helpers.find_element_by_tag_and_class_name( d3, 'div', 'search-service-navFacetGroupContainerFacetOptionList' )
 
     if d4 == None:
         print( "FATAL: cannot find sub-categories" )
@@ -141,14 +139,13 @@ def determine_subcategories( driver ):
 
     d5 = d4.find_element_by_class_name( 'search-service-navFacetGroupList' )
 
-    #d6 = d5.find_element_by_class_name( 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
-    #d6 = helpers.find_element_by_tag_and_class_name( d5, 'li', 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
+    d6 = helpers.find_element_by_tag_and_class_name( d5, 'ul', 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
 
-    #if d6 == None:
-    #    print( "FATAL: cannot find sub-categories" )
-    #    exit()
+    if d6 == None:
+        print( "FATAL: cannot find sub-categories" )
+        exit()
 
-    elements = d5.find_elements_by_class_name( 'search-service-rsFacetGroupContainerCategoryFacetOption' )
+    elements = d6.find_elements_by_class_name( 'search-service-rsFacetGroupContainerCategoryFacetOption' )
 
     print( "INFO: found {} sub categories".format( len( elements ) ) )
 
