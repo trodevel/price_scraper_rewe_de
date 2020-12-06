@@ -1,6 +1,24 @@
 #!/usr/bin/python3
 
+from selenium import webdriver
+
 import time
+
+##########################################################
+
+def init_driver( driver_path ):
+    options = webdriver.ChromeOptions()
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+
+    driver = webdriver.Chrome( options=options, driver_path )
+
+    return driver
+
+##########################################################
 
 def does_class_exist( parent, class_name ):
 

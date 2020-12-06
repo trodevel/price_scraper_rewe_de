@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -12,21 +11,6 @@ import product_parser # parse_product
 import re
 
 from datetime import datetime
-
-##########################################################
-
-def init_driver():
-    options = webdriver.ChromeOptions() 
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
-    options.add_argument("--disable-blink-features=AutomationControlled")
-
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option('useAutomationExtension', False)
-
-    DRIVER_PATH = config.DRIVER_PATH
-    driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-
-    return driver
 
 ##########################################################
 
@@ -384,7 +368,7 @@ def generate_filename():
     return res
 
 ##########################################################
-driver = init_driver()
+driver = helpers.init_driver( config.DRIVER_PATH )
 
 driver.get( 'https://shop.rewe.de' )
 
