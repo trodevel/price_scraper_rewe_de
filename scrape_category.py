@@ -295,31 +295,25 @@ def parse_category( driver, f, category_link, category_name ):
     #wait_till_product_page_loaded( driver )
     helpers.wait_for_page_load( driver )
 
-    determine_subcategories( driver )
+    # "angebot" page has another structure, so we'll not bother us with parsing sub-categories
+    if category_link.find( "/angebot" ) != -1:
+        parse_page( driver, f, category_handle, category_name, category_handle, category_name )
+        return
 
-    num_pages = determine_number_of_pages( driver )
+    subcategory_links = determine_subcategories( driver )
 
-    print( "INFO: number of pages {} on {}".format( num_pages, category_link ) )
+    num_subcateg = len( subcategory_links )
 
-    page = 1
+    i = 0
 
-    print( "INFO: parsing page {} / {}".format( page, num_pages ) )
+    for c, subcategory_name in subcategory_links.items():
 
-    parse_page( driver, f, category_handle, category_name )
+        i += 1
 
-    page += 1
+        print( "INFO: parsing subcategory {} / {} - {}".format( i, num_subcateg, subcategory_name ) )
 
-    while page <= num_pages:
-        print( "INFO: parsing page {} / {}".format( page, num_pages ) )
+        parse_subcategory( driver, f, category_handle, category_name, c, helpers.to_csv_conform_string( subcategory_name ) )
 
-        driver.get( category_link + '?page=' + str( page ) )
-
-        #wait_till_product_page_loaded( driver )
-        helpers.wait_for_page_load( driver )
-
-        parse_page( driver, f, category_handle, category_name )
-
-        page += 1
 
 ##########################################################
 
