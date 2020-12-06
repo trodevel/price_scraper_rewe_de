@@ -251,7 +251,6 @@ def parse_subcategory( driver, f, category_handle, category_name, subcategory_li
 
     driver.get( subcategory_link )
 
-    #wait_till_product_page_loaded( driver )
     helpers.wait_for_page_load( driver )
 
     num_pages = determine_number_of_pages( driver )
@@ -271,7 +270,6 @@ def parse_subcategory( driver, f, category_handle, category_name, subcategory_li
 
         driver.get( subcategory_link + '?page=' + str( page ) )
 
-        #wait_till_product_page_loaded( driver )
         helpers.wait_for_page_load( driver )
 
         parse_page( driver, f, category_handle, category_name, subcategory_handle, subcategory_name )
@@ -286,7 +284,6 @@ def parse_category( driver, f, category_link, category_name ):
 
     driver.get( category_link )
 
-    #wait_till_product_page_loaded( driver )
     helpers.wait_for_page_load( driver )
 
     # "angebot" page has another structure, so we'll not bother us with parsing sub-categories
