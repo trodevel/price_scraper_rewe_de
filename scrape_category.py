@@ -327,4 +327,4 @@ for c, category_name in category_links.items():
 
     print( "INFO: parsing category {} / {} - {}".format( i, num_categ, category_name ) )
 
-    parse_category( driver, f, c, category_name )
+    parse_category( driver, f, c, helpers.quote_quotes( category_name ) )
