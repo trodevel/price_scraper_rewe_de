@@ -61,3 +61,10 @@ def sleep( sec ):
 def quote_quotes( s )
     res = s.replace( '"', '""' )
     return res
+
+def to_csv_conform_string( s, separator = ';' ):
+
+    if s.find( separator ) != -1:
+        return '"' + quote_quotes + '"'
+
+    return s
