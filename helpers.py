@@ -58,7 +58,7 @@ def sleep( sec ):
     print( "sleeping {} sec".format( sec ) )
     time.sleep( sec )
 
-def quote_quotes( s )
+def quote_quotes( s ):
     res = s.replace( '"', '""' )
     return res
 
