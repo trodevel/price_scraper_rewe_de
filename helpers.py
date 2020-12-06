@@ -80,6 +80,15 @@ def does_class_exist( parent, class_name ):
 
     return False
 
+def does_tag_exist( parent, name ):
+
+    elems = parent.find_elements_by_tag_name( name )
+
+    if len( elems ) > 0 :
+        return True
+
+    return False
+
 def get_optional_element_text_by_class_name( parent, class_name, default_value ):
 
     if does_class_exist( parent, class_name ):
