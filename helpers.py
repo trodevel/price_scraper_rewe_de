@@ -20,8 +20,12 @@ def init_driver( driver_path ):
 
 ##########################################################
 
-def sleep( sec ):
-    print( "sleeping {} sec".format( sec ) )
+def sleep( sec, verbose = True ):
+    if verbose:
+        print( "sleeping {} sec".format( sec ) )
+    else
+        print( '.', end='', flush=True )
+
     time.sleep( sec )
 
 ##########################################################
@@ -37,12 +41,15 @@ def wait_for_page_load_v1( driver, timeout=20 ):
 
     i = 0
 
+    print( "waiting " );
+
     while i <= timeout:
         if has_page_loaded( driver ):
+            print()
             print( "DEBUG: loaded page in {} sec".format( i ) )
             return
         i += 1
-        sleep( 1 )
+        sleep( 1, False )
 
     print( "FATAL: cannot load page in {} sec".format( timeout ) )
     exit()
