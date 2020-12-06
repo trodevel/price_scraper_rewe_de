@@ -129,7 +129,7 @@ def quote_quotes( s ):
 
 def to_csv_conform_string( s, separator = ';' ):
 
-    if s.find( separator ) != -1:
-        return '"' + quote_quotes + '"'
+    if s.find( separator ) != -1 or s.find( '"' ) != -1:
+        return '"' + quote_quotes( s ) + '"'
 
     return s
