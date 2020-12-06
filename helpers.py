@@ -23,7 +23,7 @@ def init_driver( driver_path ):
 def sleep( sec, verbose = True ):
     if verbose:
         print( "sleeping {} sec".format( sec ) )
-    else
+    else:
         print( '.', end='', flush=True )
 
     time.sleep( sec )
