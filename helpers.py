@@ -20,6 +20,44 @@ def init_driver( driver_path ):
 
 ##########################################################
 
+def has_page_loaded( driver ):
+    #self.log.info("Checking if {} page is loaded.".format(self.driver.current_url))
+    page_state = driver.execute_script('return document.readyState;')
+    return page_state == 'complete'
+
+##########################################################
+
+def wait_for_page_load_v1( driver, timeout=20 ):
+
+    i = 0
+
+    while i <= timeout:
+        if has_page_loaded( driver ):
+            print( "DEBUG: loaded page in {} sec".format( i ) )
+            return
+        i += 1
+        helpers.sleep( 1 )
+
+    print( "FATAL: cannot load page in {} sec".format( timeout ) )
+    exit()
+
+##########################################################
+
+def wait_for_page_load_v3( driver, timeout=20 ):
+
+    print( "DEBUG: waiting for page to load at {}.".format( driver.driver.current_url ) )
+    old_page = driver.find_element_by_tag_name('html')
+    yield
+    WebDriverWait(driver, timeout).until(staleness_of(old_page))
+
+##########################################################
+
+def wait_for_page_load( driver, timeout=20 ):
+
+    wait_for_page_load_v1( driver, timeout )
+
+##########################################################
+
 def does_class_exist( parent, class_name ):
 
     elems = parent.find_elements_by_class_name( class_name )
