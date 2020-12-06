@@ -334,18 +334,18 @@ select_shop_by_post_code( driver )
 
 helpers.sleep(5)
 
-category_links = determine_categories( driver )
+links = determine_categories( driver )
 
-num_categ = len( category_links )
+num_links = len( links )
 
 f = open( generate_filename(), "w" )
 
 i = 0
 
-for c, category_name in category_links.items():
+for c, name in links.items():
 
     i += 1
 
-    print( "INFO: parsing category {} / {} - {}".format( i, num_categ, category_name ) )
+    print( "INFO: parsing category {} / {} - {}".format( i, num_links, name ) )
 
-    parse_category( driver, f, c, helpers.to_csv_conform_string( category_name ) )
+    parse_category( driver, f, c, helpers.to_csv_conform_string( name ) )
