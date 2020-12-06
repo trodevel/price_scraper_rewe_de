@@ -139,6 +139,50 @@ def determine_categories( driver ):
 
 ##########################################################
 
+def determine_subcategories( driver ):
+
+    d1 = driver.find_element_by_class_name( 'search-service-rsFacetedProductList' )
+
+    d2 = d1.find_element_by_class_name( 'search-service-hideInMobileView' )
+
+    d3 = d2.find_element_by_class_name( 'search-service-rsFacetGroupListContainer' )
+
+    # somehow the following doesn't work, so use the helper
+    d4 = d3.find_element_by_class_name( 'search-service-navFacetGroupContainerFacetOptionList' )
+    #d4 = helpers.find_element_by_tag_and_class_name( d3, 'div', 'search-service-navFacetGroupContainerFacetOptionList' )
+
+    if d4 == None:
+        print( "FATAL: cannot find sub-categories" )
+        exit()
+
+    d5 = d4.find_element_by_class_name( 'search-service-navFacetGroupList' )
+
+    #d6 = d5.find_element_by_class_name( 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
+    #d6 = helpers.find_element_by_tag_and_class_name( d5, 'li', 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
+
+    #if d6 == None:
+    #    print( "FATAL: cannot find sub-categories" )
+    #    exit()
+
+    elements = d5.find_elements_by_class_name( 'search-service-rsFacetGroupContainerCategoryFacetOption' )
+
+    print( "INFO: found {} sub categories".format( len( elements ) ) )
+
+    links = dict()
+
+    for s in elements:
+        link = s.get_attribute( 'href' )
+        name = s.get_attribute( 'title' )
+
+        link = harmonize_link( link )
+
+        print( "DEBUG: determine_subcategories: {} - {}".format( link, name ) )
+        links[ link ] = name
+
+    return links
+
+##########################################################
+
 def determine_number_of_pages( driver ):
 
     try:
@@ -269,6 +313,8 @@ def parse_category( driver, f, category_link, category_name ):
 
     #wait_till_product_page_loaded( driver )
     wait_for_page_load( driver )
+
+    determine_subcategories( driver )
 
     num_pages = determine_number_of_pages( driver )
 
