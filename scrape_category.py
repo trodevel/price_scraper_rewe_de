@@ -12,6 +12,8 @@ import re
 
 from datetime import datetime
 
+DEBUG_CATEGORY = False
+
 ##########################################################
 
 def accept_banner( driver ):
@@ -117,6 +119,11 @@ def determine_categories( driver ):
         link = harmonize_link( link )
 
         print( "DEBUG: determine_categories: {} - {}".format( link, name ) )
+
+        if link.find( "frische" ) == -1 and DEBUG_CATEGORY == True:
+            print( "DEBUG: temporary ignoring" )
+            continue
+
         links[ link ] = name
 
     return links
@@ -153,13 +160,17 @@ def determine_subcategories( driver ):
 
     for s in elements:
 
+        if helpers.does_tag_exist( s, "a" ) == False:
+            print( "WARNING: element without tag 'a', ignoring" )
+            continue
+
         s2 = s.find_element_by_tag_name( "a" )
 
         link = s2.get_attribute( 'href' )
         name = s2.get_attribute( 'title' )
 
         if link == None:
-            print( "WARNING: empty link {}".format( s2 ) )
+            print( "WARNING: empty link {}, ignoring".format( s2 ) )
             continue
 
         link = harmonize_link( link )
