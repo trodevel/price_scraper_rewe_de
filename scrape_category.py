@@ -237,7 +237,7 @@ def parse_page( driver, f, category_handle, category_name, subcategory_handle, s
 
     for e in elements:
         p = product_parser.parse_product( e )
-        line = category_handle + ';' + category_name + ';' + subcategory_handle + ';' + subcategory_name + ';' + p + "\n"
+        line = category_handle + ';' + subcategory_handle + ';' + + category_name + ';' subcategory_name + ';' + p + "\n"
         f.write( line )
         print( '.', end='', flush=True )
 
