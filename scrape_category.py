@@ -300,19 +300,19 @@ def parse_category( driver, f, category_link, category_name ):
         parse_page( driver, f, category_handle, category_name, category_handle, category_name )
         return
 
-    subcategory_links = determine_subcategories( driver )
+    links = determine_subcategories( driver )
 
-    num_subcateg = len( subcategory_links )
+    num_links = len( links )
 
     i = 0
 
-    for c, subcategory_name in subcategory_links.items():
+    for c, name in links.items():
 
         i += 1
 
-        print( "INFO: parsing subcategory {} / {} - {}".format( i, num_subcateg, subcategory_name ) )
+        print( "INFO: parsing subcategory {} / {} - {}".format( i, num_links, name ) )
 
-        parse_subcategory( driver, f, category_handle, category_name, c, helpers.to_csv_conform_string( subcategory_name ) )
+        parse_subcategory( driver, f, category_handle, category_name, c, helpers.to_csv_conform_string( name ) )
 
 
 ##########################################################
