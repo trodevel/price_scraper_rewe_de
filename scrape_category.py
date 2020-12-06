@@ -223,16 +223,6 @@ def extract_handle_from_url( url ):
 
 ##########################################################
 
-#def wait_till_product_page_loaded( driver ):
-#
-#    element = WebDriverWait(driver, 15).until(
-#        EC.visibility_of_element_located((By.ID, "search-service-content"))
-#        )
-#
-#    print( "DEBUG: page loaded" )
-
-##########################################################
-
 def parse_page( driver, f, category_handle, category_name, subcategory_handle, subcategory_name ):
 
     content = driver.find_element_by_id( 'search-service-content' )
