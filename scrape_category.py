@@ -305,6 +305,41 @@ def parse_page( driver, f, category_handle, category_name ):
 
 ##########################################################
 
+def parse_subcategory( driver, f, category_handle, category_name, subcategory_link, subcategory_name ):
+
+    subcategory_handle = extract_name_from_url( subcategory_link )
+
+    driver.get( subcategory_link )
+
+    #wait_till_product_page_loaded( driver )
+    wait_for_page_load( driver )
+
+    num_pages = determine_number_of_pages( driver )
+
+    print( "INFO: number of pages {} on {}".format( num_pages, subcategory_link ) )
+
+    page = 1
+
+    print( "INFO: parsing page {} / {}".format( page, num_pages ) )
+
+    parse_page( driver, f, category_handle, category_name, subcategory_handle, subcategory_name )
+
+    page += 1
+
+    while page <= num_pages:
+        print( "INFO: parsing page {} / {}".format( page, num_pages ) )
+
+        driver.get( subcategory_link + '?page=' + str( page ) )
+
+        #wait_till_product_page_loaded( driver )
+        wait_for_page_load( driver )
+
+        parse_page( driver, f, category_handle, category_name, subcategory_handle, subcategory_name )
+
+        page += 1
+
+##########################################################
+
 def parse_category( driver, f, category_link, category_name ):
 
     category_handle = extract_name_from_url( category_link )
