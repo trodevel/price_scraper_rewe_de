@@ -283,7 +283,7 @@ def extract_name_from_url( url ):
 
 ##########################################################
 
-def parse_page( driver, f, category_handle, category_name ):
+def parse_page( driver, f, category_handle, category_name, subcategory_handle, subcategory_name ):
 
     content = driver.find_element_by_id( 'search-service-content' )
 
@@ -297,7 +297,7 @@ def parse_page( driver, f, category_handle, category_name ):
 
     for e in elements:
         p = product_parser.parse_product( e )
-        line = category_handle + ';"' + category_name + '";' + p + "\n"
+        line = category_handle + ';' + category_name + ';' + subcategory_handle + ';' + subcategory_name + ';' + p + "\n"
         f.write( line )
         print( '.', end='', flush=True )
 
