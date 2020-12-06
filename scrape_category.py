@@ -155,8 +155,15 @@ def determine_subcategories( driver ):
     links = dict()
 
     for s in elements:
-        link = s.get_attribute( 'href' )
-        name = s.get_attribute( 'title' )
+
+        s2 = s.find_element_by_tag_name( "a" )
+
+        link = s2.get_attribute( 'href' )
+        name = s2.get_attribute( 'title' )
+
+        if link == None:
+            print( "WARNING: empty link {}".format( s2 ) )
+            continue
 
         link = harmonize_link( link )
 
