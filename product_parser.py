@@ -9,7 +9,7 @@ def parse_product_pic( product ):
 
 def parse_product_title( p ):
     div = p.find_element_by_class_name( 'LinesEllipsis  ' )
-    return div.text
+    return helpers.to_csv_conform_string( div.text )
 
 def parse_product_grammage( p ):
     div = p.find_element_by_class_name( 'search-service-productGrammage' )
