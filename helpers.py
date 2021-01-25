@@ -6,13 +6,16 @@ import time
 
 ##########################################################
 
-def init_driver( driver_path ):
+def init_driver( driver_path, binary_location = "" ):
     options = webdriver.ChromeOptions()
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
     options.add_argument("--disable-blink-features=AutomationControlled")
 
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
+
+    if binary_location:
+        options.binary_location = binary_location
 
     driver = webdriver.Chrome( options=options, executable_path=driver_path )
 

@@ -326,7 +326,7 @@ def generate_filename():
     return res
 
 ##########################################################
-driver = helpers.init_driver( config.DRIVER_PATH )
+driver = helpers.init_driver( config.DRIVER_PATH, config.BROWSER_BINARY )
 
 driver.get( 'https://shop.rewe.de' )
 
