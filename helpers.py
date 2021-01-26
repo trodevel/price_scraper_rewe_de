@@ -8,7 +8,7 @@ import time
 
 def init_driver( driver_path, binary_location = "" ):
     options = webdriver.ChromeOptions()
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
+    options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36")
     options.add_argument("--disable-blink-features=AutomationControlled")
 
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
