@@ -175,6 +175,10 @@ def determine_subcategories( driver ):
 
         link = harmonize_link( link )
 
+        if link.find( "?" ) != -1:
+            print( "WARNING: broken link {}, ignoring".format( link ) )
+            continue
+
         print( "DEBUG: determine_subcategories: {} - {}".format( link, name ) )
         links[ link ] = name
 
@@ -227,6 +231,7 @@ def determine_number_of_pages( driver ):
 ##########################################################
 
 def extract_handle_from_url( url ):
+    #print( "DEBUG: extract_handle_from_url: url = {}".format( url ) )
     p = re.compile( "/([a-z_\-]*)/$" )
     result = p.search( url )
     res = result.group( 1 )
