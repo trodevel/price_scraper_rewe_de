@@ -144,7 +144,7 @@ def determine_subcategories( driver ):
 
     d5 = d4.find_element_by_class_name( 'search-service-navFacetGroupList' )
 
-    d6 = helpers.find_element_by_tag_and_class_name( d5, 'ul', 'search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption' )
+    d6 = d5.find_element_by_css_selector( "ul[class='search-service-rsFacetGroupContainerFacetOptionList search-service-rsFacetGroupContainerIntendedFacetOption']" )
 
     if d6 == None:
         print( "FATAL: cannot find sub-categories" )
