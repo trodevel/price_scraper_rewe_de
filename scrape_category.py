@@ -96,9 +96,7 @@ def harmonize_link( link ):
 
 def determine_categories( driver ):
 
-    # somehow the following doesn't work, so use the helper
-    #div = driver.find_element_by_class_name( 'home-page-categories home-page-categories-collapsed' )
-    div = helpers.find_element_by_tag_and_class_name( driver, 'div', 'home-page-categories home-page-categories-collapsed' )
+    div = driver.find_element_by_css_selector( "div[class='home-page-categories home-page-categories-collapsed']" )
 
     if div == None:
         print( "FATAL: cannot find categories" )
