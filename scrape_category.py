@@ -196,10 +196,7 @@ def determine_number_of_pages( driver ):
 
         #helpers.dump_elements_by_tag_name( i, 'div' )
 
-        # somehow the following doesn't work, so use the helper
-        #div = i.find_element_by_class_name( 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
-
-        div = helpers.find_element_by_tag_and_class_name( i, 'div', 'search-service-paginationPagesContainer search-service-paginationPagesContainer' )
+        div = i.find_element_by_css_selector( "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer']" )
 
         if div == None:
             print( "FATAL: cannot find pagination container" )
