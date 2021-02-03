@@ -351,3 +351,5 @@ for c, name in links.items():
     print( "INFO: parsing category {} / {} - {}".format( i, num_links, name ) )
 
     parse_category( driver, f, c, helpers.to_csv_conform_string( name ) )
+
+print( "INFO: done" )
