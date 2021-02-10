@@ -13,6 +13,7 @@ import re
 from datetime import datetime
 
 DEBUG_CATEGORY = False
+DEBUG_SUBCATEGORY = False
 
 ##########################################################
 
@@ -178,6 +179,11 @@ def determine_subcategories( driver ):
             continue
 
         print( "DEBUG: determine_subcategories: {} - {}".format( link, name ) )
+
+        if link.find( "cerealien" ) == -1 and DEBUG_SUBCATEGORY == True:
+            print( "DEBUG: temporary ignoring" )
+            continue
+
         links[ link ] = name
 
     return links
