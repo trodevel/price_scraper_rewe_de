@@ -186,42 +186,48 @@ def determine_subcategories( driver ):
 
 def determine_number_of_pages( driver ):
 
+    i = None
+
     try:
 
-        element = WebDriverWait(driver, 15).until(
+        i = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.CLASS_NAME, "search-service-paginationContainer"))
             )
 
-        i = driver.find_element_by_class_name( 'search-service-paginationContainer' )
-
-        #helpers.dump_elements_by_tag_name( i, 'div' )
-
-        div = i.find_element_by_css_selector( "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer']" )
-
-        if div == None:
-            print( "FATAL: cannot find pagination container" )
-            exit()
-
-        #helpers.dump_elements_by_tag_name( div, 'form' )
-
-        elems = div.find_elements_by_tag_name( 'form' )
-
-        if len( elems ) == 0:
-            print( "FATAL: cannot find pages" )
-            exit();
-        last = elems[-1]
-
-        #print( last )
-
-        #helpers.dump_elements_by_tag_name( last, 'button' )
-
-        button = last.find_element_by_tag_name( 'button' )
-
-        return int( button.text )
-
     except:
 
+        print( "WARNING: no pagination container found" )
+
         return 1
+
+    #helpers.dump_elements_by_tag_name( i, 'div' )
+
+    div = None
+
+    if helpers.does_css_selector_exist( i, "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer']" ):
+        div = i.find_element_by_css_selector( "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer']" )
+    elif helpers.does_css_selector_exist( i, "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer search-service-paginationPagesContainerSmall']" ):
+        div = i.find_element_by_css_selector( "div[class='search-service-paginationPagesContainer search-service-paginationPagesContainer search-service-paginationPagesContainerSmall']" )
+    else:
+        print( "FATAL: broken pagination container" )
+        exit()
+
+    #helpers.dump_elements_by_tag_name( div, 'form' )
+
+    elems = div.find_elements_by_tag_name( 'form' )
+
+    if len( elems ) == 0:
+        print( "FATAL: cannot find pages" )
+        exit()
+    last = elems[-1]
+
+    #print( last )
+
+    #helpers.dump_elements_by_tag_name( last, 'button' )
+
+    button = last.find_element_by_tag_name( 'button' )
+
+    return int( button.text )
 
 ##########################################################
 
