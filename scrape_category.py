@@ -33,13 +33,12 @@ def accept_banner( driver ):
 ##########################################################
 
 def select_shop_by_post_code( driver ):
-    i = helpers.find_element_by_tag_and_class_name( driver, 'button', 'gbmc-trigger gbmc-qa-trigger' )
 
-    if i == None:
-        print( "FATAL: cannot find button to enter postcode (PLZ)" )
-        exit()
+    i1 = driver.find_element_by_class_name( 'ths-header__navigation' )
 
-    i.click()
+    i2 = i1.find_element_by_css_selector( "button[class='gbmc-header-link gbmc-header-link-js gbmc-header-link-qa rs-qa-market-selector-link']" )
+
+    i2.click()
 
     helpers.sleep(5)
 
