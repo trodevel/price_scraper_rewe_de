@@ -109,9 +109,9 @@ def select_shop_by_post_code__new( driver ):
 
     i4 = helpers.find_element_by_tag_and_class_name( i1, "div", "gbmc-page-body ", False )
 
-    i5 = helpers.find_element_by_tag_and_class_name( i4, "div", "gbmc-market-list ", False )
+    i5 = helpers.find_element_by_tag_and_class_name( i4, "ol", "gbmc-market-list ", False )
 
-    i6 = helpers.find_element_by_tag_and_class_name( i5, "div", "gbmc-market-list-item ", False )
+    i6 = helpers.find_element_by_tag_and_class_name( i5, "li", "gbmc-market-list-item ", False )
 
     i7 = helpers.find_element_by_tag_and_class_name( i6, "button", "gbmc-qa-market-picker ", False )
 
