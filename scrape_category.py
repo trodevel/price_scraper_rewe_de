@@ -32,7 +32,7 @@ def accept_banner( driver ):
 
 ##########################################################
 
-def select_shop_by_post_code( driver ):
+def select_shop_by_post_code__old( driver ):
 
     i1 = driver.find_element_by_class_name( 'ths-header__navigation' )
 
@@ -82,6 +82,57 @@ def select_shop_by_post_code( driver ):
         exit()
 
     i.click()
+
+##########################################################
+
+def select_shop_by_post_code__new( driver ):
+
+    i1 = driver.find_element_by_class_name( 'gbmc-market-chooser-container' )
+
+    i2 = helpers.find_element_by_tag_and_class_name( i1, "button", "gbmc-wide", False )
+
+    i2.click()
+
+    helpers.sleep(2)
+
+    i3 = helpers.find_element_by_tag_and_class_name( driver, "input", "gbmc-zipcode-input gbmc-undecided", False )
+
+    if i3 == None:
+        print( "FATAL: cannot find input field to enter postcode (PLZ)" )
+        exit()
+
+    print( "INFO: sending postcode {}".format( config.PLZ ) )
+
+    i3.send_keys( config.PLZ )
+
+    helpers.sleep(3)
+
+    i4 = helpers.find_element_by_tag_and_class_name( i1, "div", "gbmc-page-body ", False )
+
+    i5 = helpers.find_element_by_tag_and_class_name( i4, "div", "gbmc-market-list ", False )
+
+    i6 = helpers.find_element_by_tag_and_class_name( i5, "div", "gbmc-market-list-item ", False )
+
+    i7 = helpers.find_element_by_tag_and_class_name( i6, "button", "gbmc-qa-market-picker ", False )
+
+    if i7 == None:
+        print( "FATAL: cannot find input field to enter postcode (PLZ)" )
+        exit()
+
+    i7.click()
+
+    helpers.sleep(3)
+
+##########################################################
+
+def select_shop_by_post_code( driver ):
+
+    if helpers.does_class_exist( driver, 'gbmc-market-chooser-container' ):
+        print( "INFO: new design" )
+        select_shop_by_post_code__new( driver )
+    else:
+        print( "INFO: old design" )
+        select_shop_by_post_code__old( driver )
 
 ##########################################################
 
