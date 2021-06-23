@@ -201,8 +201,7 @@ def determine_subcategories( driver ):
         print( "FATAL: cannot find sub-categories" )
         exit()
 
-
-    elements = d6.find_elements_by_css_selector( "ul[class='search-service-rsFacetGroupContainerIndentedFacetOptionLevel2 search-service-rsFacetGroupContainerCategoryFacetOption']" )
+    elements = d6.find_elements_by_css_selector( "li[class='search-service-rsFacetGroupContainerIndentedFacetOptionLevel2 search-service-rsFacetGroupContainerCategoryFacetOption']" )
 
     print( "INFO: found {} sub categories".format( len( elements ) ) )
 
